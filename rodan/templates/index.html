@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Rodan</title>
+    <link rel="stylesheet" href="styles/rodan.css">
+</head>
+<body>
+    <p>Foo</p>
+    {templates}
+
+    <script type="text/javascript" src="lib/system.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+    <script>
+        console.log(System);
+
+        System.meta['jquery'] = {{ format: 'cjs' }};
+        System.import('app/main');
+    </script>
+
+</body>
+</html>
