@@ -3,15 +3,14 @@ System.config({
   "transpiler": "babel",
   "paths": {
     "*": "*.js",
-    "npm:*": "libs/npm/*.js",
-    "github:*": "libs/github/*.js"
-  }
-});
-
-System.config({
-  "meta": {
-    "jquery": {
-      "exports": "jQuery"
+    "github:*": "libs/github/*.js",
+    "npm:*": "libs/npm/*.js"
+  },
+  "shim": {
+    "npm:backbone@1.1.2": {
+      "deps": [
+        "jquery"
+      ]
     }
   }
 });

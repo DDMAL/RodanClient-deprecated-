@@ -32,13 +32,14 @@
   },
   "jspm": {
     "directories": {
+      "baseURL": "rodan",
       "lib": "rodan",
-      "packages": "libs"
+      "packages": "rodan/libs"
     },
-    "configFile": "rodan/config.js",
     "dependencies": {
       "backbone": "npm:backbone@^1.1.2",
-      "backbone.marionette": "npm:backbone.marionette@^2.4.1"
+      "backbone.marionette": "npm:backbone.marionette@^2.4.1",
+      "jquery": "npm:jquery@^2.1.3"
     }
   }
 }
