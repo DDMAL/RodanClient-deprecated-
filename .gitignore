@@ -4,3 +4,6 @@
 /rodan/lib
 
 /rodan/index.html
+node_modules
+.idea
+rodan/libs
