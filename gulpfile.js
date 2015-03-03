@@ -2,18 +2,55 @@
 'use strict'
 
 var gulp = require('gulp');
-var webpack = require('webpack');
 var $ = require('gulp-load-plugins')();
 var shell = require('gulp-shell');
+var webpack = require('webpack');
 var webpackConfig = require('./webpack.config');
 
+
+var RodanDevCompiler = (function()
+{
+    var rodanCompiler;
+
+    function createCompiler()
+    {
+        var conf = Object.create(webpackConfig);
+        conf.devtool = 'source-map';
+        conf.debug = true;
+        conf.watch = true;
+        conf.output.path = 'build/scripts';
+        return webpack(conf);
+    }
+
+    return {
+        getWebpack: function()
+        {
+            if (!rodanCompiler) {
+                rodanCompiler = createCompiler();
+            }
+            return rodanCompiler;
+        }
+    }
+})();
+
+gulp.task('develop:compile', function(callback)
+{
+    RodanDevCompiler.getWebpack().run(function(err, stats)
+    {
+        if (err)
+            throw new $.util.PluginError("webpack", err);
+
+        $.util.log("[webpack]", stats.toString({colors: true}))
+        callback();
+    });
+});
 
 gulp.task('develop:templates', shell.task([
     'python support/build-template.py -b rodan/templates/index.html -t rodan/templates/views rodan'
 ]));
 
 gulp.task('develop:styles', shell.task([
-    'sassc -m rodan/styles/rodan.scss rodan/styles/rodan.css'
+    'sassc -m rodan/styles/rodan.scss build/styles/rodan.css'
 ]));
 
 gulp.task('develop:jshint', function (callback)
@@ -34,14 +71,25 @@ gulp.task('develop:server', function()
         .use(serveIndex('rodan'));
 
     require('http').createServer(app)
-        .listen(9000)
+        .listen(9001)
         .on('listening', function()
         {
-            console.log('Started a web server on http://localhost:9000');
+            console.log('Started a web server on http://localhost:9001');
         });
 });
 
+gulp.task('develop:clean', function(callback)
+{
+    var del = require('del');
+    del(['rodan/styles/rodan.css',
+        'rodan/styles/rodan.css.map',
+        'rodan/index.html'], function () {
+    });
+})
+
 gulp.task('develop', ['develop:server'], function() {
+    gulp.start('develop:templates');
+    gulp.start('develop:styles');
     $.livereload.listen();
 
     gulp.watch([

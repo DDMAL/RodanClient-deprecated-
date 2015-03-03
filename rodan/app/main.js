@@ -1,11 +1,18 @@
-import $ from 'jquery';
-//import _ from 'underscore';
 import Backbone from 'backbone';
-Backbone.$ = $;
-//Backbone._ = _;
-import Marionette from 'backbone.marionette';
-//console.log(Marionette);
-import { App } from './app';
+import { RodanClient } from './app';
+//import Marionette from 'backbone.marionette';
+//
+//
+var rodanApp = new RodanClient();
+rodanApp.start();
 
-var x = new App();
-x.bar();
+//class Project extends Backbone.Model
+//{
+//    constructor()
+//    {
+//        console.log('something');
+//    }
+//}
+//
+//var p = new Project();
+//debugger;
