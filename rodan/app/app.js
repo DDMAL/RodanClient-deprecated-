@@ -1,6 +1,8 @@
 import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 
+console.log(Marionette);
+
 export class RodanClient extends Marionette.Application
 {
     initialize(options)
