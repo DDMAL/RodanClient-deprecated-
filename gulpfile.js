@@ -50,7 +50,7 @@ gulp.task('develop:templates', shell.task([
 ]));
 
 gulp.task('develop:styles', shell.task([
-    'sassc -m rodan/styles/rodan.scss build/styles/rodan.css'
+    'sassc -m rodan/styles/rodan.scss rodan/styles/rodan.css'
 ]));
 
 gulp.task('develop:jshint', function (callback)
