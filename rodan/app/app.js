@@ -1,22 +1,23 @@
 import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 
-console.log(Marionette);
+import RodanRouter from './router';
 
-export class RodanClient extends Marionette.Application
+class RodanClient extends Marionette.Application
 {
-    initialize(options)
+    initialize()
     {
-        console.log('initializing');
     }
 
-    onStart(options)
+    onStart()
     {
-        console.log('starting');
+        new RodanRouter();
+
         if (Backbone.history)
         {
-            console.log('starting backbone history');
             Backbone.history.start();
         }
     }
 }
+
+export default RodanClient;
