@@ -8,42 +8,42 @@ var webpack = require('webpack');
 var webpackConfig = require('./webpack.config');
 
 
-var RodanDevCompiler = (function()
-{
-    var rodanCompiler;
+//var RodanDevCompiler = (function()
+//{
+//    var rodanCompiler;
+//
+//    function createCompiler()
+//    {
+//        var conf = Object.create(webpackConfig);
+//        conf.devtool = 'source-map';
+//        conf.debug = true;
+//        conf.watch = true;
+//        conf.output.path = 'build/scripts';
+//        return webpack(conf);
+//    }
+//
+//    return {
+//        getWebpack: function()
+//        {
+//            if (!rodanCompiler) {
+//                rodanCompiler = createCompiler();
+//            }
+//            return rodanCompiler;
+//        }
+//    }
+//})();
 
-    function createCompiler()
-    {
-        var conf = Object.create(webpackConfig);
-        conf.devtool = 'source-map';
-        conf.debug = true;
-        conf.watch = true;
-        conf.output.path = 'build/scripts';
-        return webpack(conf);
-    }
-
-    return {
-        getWebpack: function()
-        {
-            if (!rodanCompiler) {
-                rodanCompiler = createCompiler();
-            }
-            return rodanCompiler;
-        }
-    }
-})();
-
-gulp.task('develop:compile', function(callback)
-{
-    RodanDevCompiler.getWebpack().run(function(err, stats)
-    {
-        if (err)
-            throw new $.util.PluginError("webpack", err);
-
-        $.util.log("[webpack]", stats.toString({colors: true}))
-        callback();
-    });
-});
+//gulp.task('develop:compile', function(callback)
+//{
+//    RodanDevCompiler.getWebpack().run(function(err, stats)
+//    {
+//        if (err)
+//            throw new $.util.PluginError("webpack", err);
+//
+//        $.util.log("[webpack]", stats.toString({colors: true}))
+//        callback();
+//    });
+//});
 
 gulp.task('develop:templates', shell.task([
     'python support/build-template.py -b rodan/templates/index.html -t rodan/templates/views rodan'
@@ -118,8 +118,7 @@ gulp.task('production:jshint', function (callback)
         .pipe($.jshint.reporter('fail'));
 });
 
-
 gulp.task('default', function()
 {
-    gulp.start('develop:build');
+    gulp.start('develop');
 });
