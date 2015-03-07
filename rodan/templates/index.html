@@ -68,7 +68,11 @@
     <script type="text/javascript" src="config.js"></script>
     <script>
         System.import('twbs/bootstrap');
-        System.import('app/main');
+        System.import('app/Configuration').then(function(config)
+        {{
+            window.Configuration = config;
+        }});
+        System.import('app/Main');
     </script>
 </body>
 </html>

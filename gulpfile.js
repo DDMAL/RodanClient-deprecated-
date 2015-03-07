@@ -4,8 +4,9 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var shell = require('gulp-shell');
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config');
+var karma = require('karma').server;
+//var webpack = require('webpack');
+//var webpackConfig = require('./webpack.config');
 
 
 //var RodanDevCompiler = (function()
@@ -71,7 +72,7 @@ gulp.task('develop:server', function()
         .use(serveIndex('rodan'));
 
     require('http').createServer(app)
-        .listen(9001)
+        .listen(9001, '132.206.14.121')
         .on('listening', function()
         {
             console.log('Started a web server on http://localhost:9001');
@@ -85,7 +86,14 @@ gulp.task('develop:clean', function(callback)
         'rodan/styles/rodan.css.map',
         'rodan/index.html'], function () {
     });
-})
+});
+
+gulp.task('develop:test', function(callback)
+{
+    karma.start({
+        configFile: __dirname + '/rodan/tests/karma.conf.js'
+    }, callback);
+});
 
 gulp.task('develop', ['develop:server'], function() {
     gulp.start('develop:templates');

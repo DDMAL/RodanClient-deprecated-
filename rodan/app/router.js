@@ -1,6 +1,6 @@
 import Backbone from 'backbone';
 
-class RodanRouter extends Backbone.Router
+class Router extends Backbone.Router
 {
     constructor()
     {
@@ -17,4 +17,4 @@ class RodanRouter extends Backbone.Router
     }
 }
 
-export default RodanRouter;
+export default Router;

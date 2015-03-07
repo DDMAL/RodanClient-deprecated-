@@ -1,6 +1,5 @@
 import $ from 'jquery';
-//import Backbone from 'backbone';
-import RodanClient from './app';
+import RodanClient from './Application';
 
 $(() => {
     'use strict';

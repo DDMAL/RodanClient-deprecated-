@@ -24,8 +24,11 @@
     "gulp-load-plugins": "^0.8.0",
     "gulp-shell": "^0.3.0",
     "gulp-util": "^3.0.4",
+    "jasmine-core": "^2.2.0",
     "jshint-stylish": "^1.0.1",
     "jspm": "^0.14.0",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.5",
     "serve-index": "^1.6.2",
     "serve-static": "^1.9.1",
     "webpack": "^1.6.0"
