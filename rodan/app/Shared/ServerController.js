@@ -1,5 +1,7 @@
-import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
+
+import { mapFromJsonObject } from '../Helpers/Utilities';
+import { Events } from '../Configuration';
 
 class ServerController extends Marionette.Object
 {
@@ -12,14 +14,23 @@ class ServerController extends Marionette.Object
         this.routes = null;
         this.serverConfiguration = null;
 
-        this.on('routesloaded', (data) =>
+        this.on(Events.RoutesLoaded, () =>
         {
-            console.log('routes have loaded');
+            console.debug('Routes Loaded');
         });
 
         this.getRoutes();
     }
 
+    get server()
+    {
+        return this.rodanServer;
+    }
+    /*
+    * Fetches the routes from the Rodan server. This is the first function to be called in the
+    * Rodan loading process. It hits the root endpoint on the Rodan server and from there downloads
+    * all of the path endpoints required to automatically configure the client application.
+    * */
     getRoutes()
     {
         var routeRequest = new XMLHttpRequest();
@@ -31,10 +42,10 @@ class ServerController extends Marionette.Object
             {
                 var resp = JSON.parse(routeRequest.response);
 
-                this.routes = resp.routes;
-                this.serverConfiguration = resp.configuration;
+                this.routes = mapFromJsonObject(resp.routes);
+                this.serverConfiguration = mapFromJsonObject(resp.configuration);
 
-                this.triggerMethod('routesloaded', this.routes);
+                this.trigger(Events.RoutesLoaded);
             }
             else
             {
@@ -44,12 +55,6 @@ class ServerController extends Marionette.Object
 
         routeRequest.open('GET', this.rodanServer, true);
         routeRequest.setRequestHeader('Accept', 'application/json');
-
-        if (this.authenticationType === 'session')
-        {
-            routeRequest.withCredentials = true;
-        }
-
         routeRequest.send();
     }
 
@@ -58,17 +63,36 @@ class ServerController extends Marionette.Object
         switch (this.authenticationType)
         {
             case 'session':
-                return this.routes['session-auth'];
-                break;
+                return this.routeForRouteName('session-auth');
             case 'token':
-                return this.routes['token-auth'];
-                break;
+                return this.routeForRouteName('token-auth');
             default:
-                console.error("An acceptable Authentication Type was not provided");
+                console.error('An acceptable Authentication Type was not provided');
                 break;
         }
     }
 
+    get statusRoute()
+    {
+        return this.routeForRouteName('session-status');
+    }
+
+    get logoutRoute()
+    {
+        return this.routeForRouteName('session-close');
+    }
+
+    routeForRouteName(aName)
+    {
+        if (this.routes.has(aName))
+        {
+            return this.routes.get(aName);
+        }
+        else
+        {
+            return null;
+        }
+    }
 }
 
 export default ServerController;

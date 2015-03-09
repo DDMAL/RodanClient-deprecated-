@@ -9,6 +9,13 @@ System.config({
   "shim": {
     "npm:backbone@1.1.2": {
       "deps": [
+        "npm:underscore@1.6.0",
+        "jquery"
+      ]
+    },
+    "npm:backbone.marionette@2.4.1": {
+      "deps": [
+        "underscore",
         "jquery"
       ]
     }
@@ -19,8 +26,10 @@ System.config({
   "map": {
     "backbone": "npm:backbone@1.1.2",
     "backbone.marionette": "npm:backbone.marionette@2.4.1",
+    "backbone.radio": "npm:backbone.radio@0.9.0",
     "jquery": "npm:jquery@2.1.3",
     "twbs/bootstrap": "github:twbs/bootstrap@3.3.2",
+    "underscore": "npm:underscore@1.6.0",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
@@ -48,7 +57,7 @@ System.config({
       "path-browserify": "npm:path-browserify@0.0.0"
     },
     "github:jspm/nodelibs-process@0.1.1": {
-      "process": "npm:process@0.10.0"
+      "process": "npm:process@0.10.1"
     },
     "github:jspm/nodelibs-stream@0.1.0": {
       "stream-browserify": "npm:stream-browserify@1.0.0"
@@ -89,6 +98,10 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.1",
       "underscore": "npm:underscore@1.6.0"
     },
+    "npm:backbone.radio@0.9.0": {
+      "backbone": "npm:backbone@1.1.2",
+      "underscore": "npm:underscore@1.7.0"
+    },
     "npm:backbone.wreqr@1.3.1": {
       "backbone": "npm:backbone@1.1.2",
       "process": "github:jspm/nodelibs-process@0.1.1",
@@ -96,7 +109,7 @@ System.config({
     },
     "npm:backbone@1.1.2": {
       "process": "github:jspm/nodelibs-process@0.1.1",
-      "underscore": "npm:underscore@1.6.0"
+      "underscore": "npm:underscore@1.7.0"
     },
     "npm:buffer@3.0.3": {
       "base64-js": "npm:base64-js@0.0.8",

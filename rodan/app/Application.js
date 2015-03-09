@@ -1,9 +1,11 @@
 import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
+import Radio from 'backbone.radio';
 
 import Router from './Router';
-import Configuration from './Configuration';
-import ServerController from './Shared/ServerController'
+import { Configuration, Events } from './Configuration';
+import ServerController from './Shared/ServerController';
+import AuthenticationController from './Shared/AuthenticationController';
 
 class RodanClient extends Marionette.Application
 {
@@ -13,6 +15,13 @@ class RodanClient extends Marionette.Application
         this.appConfiguration = Configuration;
 
         this.serverController = new ServerController(this.appConfiguration);
+        this.authenticationController = new AuthenticationController(this.serverController);
+
+        this.on(Events.RoutesLoaded, (data) =>
+        {
+            console.debug('Foo');
+        });
+
     }
 
     onStart()

@@ -6,4 +6,3 @@ $(() => {
     var rodanApp = new RodanClient();
     rodanApp.start();
 });
-

@@ -72,7 +72,7 @@ gulp.task('develop:server', function()
         .use(serveIndex('rodan'));
 
     require('http').createServer(app)
-        .listen(9001, '132.206.14.121')
+        .listen(9001)
         .on('listening', function()
         {
             console.log('Started a web server on http://localhost:9001');
@@ -91,7 +91,7 @@ gulp.task('develop:clean', function(callback)
 gulp.task('develop:test', function(callback)
 {
     karma.start({
-        configFile: __dirname + '/rodan/tests/karma.conf.js'
+        configFile: __dirname + '/karma.conf.js'
     }, callback);
 });
 
