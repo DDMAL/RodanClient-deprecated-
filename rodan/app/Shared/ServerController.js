@@ -1,5 +1,7 @@
 import Marionette from 'backbone.marionette';
+import Radio from 'backbone.radio';
 
+import Cookie from "../Helpers/Cookie";
 import { mapFromJsonObject } from '../Helpers/Utilities';
 import { Events } from '../Configuration';
 
@@ -8,24 +10,25 @@ class ServerController extends Marionette.Object
     constructor(configuration)
     {
         super();
+        this.rodanChannel = Radio.channel('rodan');
 
         this.rodanServer = configuration.rodanServer;
         this.authenticationType = configuration.authenticationType;
+        this.authenticationToken = configuration.authenticationToken;
         this.routes = null;
         this.serverConfiguration = null;
+        this.activeUser = null;
 
-        this.on(Events.RoutesLoaded, () =>
+        this.rodanChannel.on(Events.RoutesLoaded, () =>
         {
             console.debug('Routes Loaded');
         });
 
+        this.CSRFToken = new Cookie('csrftoken');
+
         this.getRoutes();
     }
 
-    get server()
-    {
-        return this.rodanServer;
-    }
     /*
     * Fetches the routes from the Rodan server. This is the first function to be called in the
     * Rodan loading process. It hits the root endpoint on the Rodan server and from there downloads
@@ -45,7 +48,7 @@ class ServerController extends Marionette.Object
                 this.routes = mapFromJsonObject(resp.routes);
                 this.serverConfiguration = mapFromJsonObject(resp.configuration);
 
-                this.trigger(Events.RoutesLoaded);
+                this.rodanChannel.trigger(Events.RoutesLoaded);
             }
             else
             {

@@ -1,11 +1,18 @@
 import Backbone from 'backbone';
 
-export class Project extends Backbone.Model
+class Project extends Backbone.Model
 {
-    constructor()
+    constructor(data)
     {
-        super();
+        this.idAttribute = 'url';
+        super(data);
     }
 
+    initialize(data)
+    {
+        debugger;
+    }
 
 }
+
+export default Project;

@@ -28,6 +28,7 @@ System.config({
     "backbone.marionette": "npm:backbone.marionette@2.4.1",
     "backbone.radio": "npm:backbone.radio@0.9.0",
     "jquery": "npm:jquery@2.1.3",
+    "sinon": "npm:sinon@1.13.0",
     "twbs/bootstrap": "github:twbs/bootstrap@3.3.2",
     "underscore": "npm:underscore@1.6.0",
     "github:jspm/nodelibs-assert@0.1.0": {
@@ -141,6 +142,10 @@ System.config({
     "npm:events-browserify@0.0.1": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
+    "npm:formatio@1.1.1": {
+      "process": "github:jspm/nodelibs-process@0.1.1",
+      "samsam": "npm:samsam@1.1.2"
+    },
     "npm:https-browserify@0.0.0": {
       "http": "github:jspm/nodelibs-http@1.7.0"
     },
@@ -169,6 +174,12 @@ System.config({
       "stream": "npm:stream-browserify@1.0.0",
       "string_decoder": "npm:string_decoder@0.10.31",
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:sinon@1.13.0": {
+      "formatio": "npm:formatio@1.1.1",
+      "lolex": "npm:lolex@1.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.1",
+      "util": "npm:util@0.10.3"
     },
     "npm:source-map@0.1.43": {
       "amdefine": "npm:amdefine@0.1.0",
