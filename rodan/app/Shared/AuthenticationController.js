@@ -29,30 +29,26 @@ class AuthenticationController extends Marionette.Object
             switch (authRequest.status)
             {
                 case 200:
-                    console.debug('Authentication Success.');
                     var parsed = JSON.parse(authRequest.responseText);
-                    //this.serverController.activeUser = new User();
                     this.activeUser = new User(parsed);
-                    //console.log(user);
                     this.rodanChannel.trigger(Events.AuthenticationSuccess);
                     break;
                 case 400:
-                    console.debug('Bad authentication status request.');
                     this.rodanChannel.trigger(Events.AuthenticationError);
                     break;
                 case 401:
-                    console.debug('User must authenticate.');
                     this.rodanChannel.trigger(Events.UserMustAuthenticate);
                     break;
                 case 403:
-                    console.debug('Forbidden');
                     this.rodanChannel.trigger(Events.UserCannotAuthenticate);
+                    break;
+                default:
+                    this.rodanChannel.trigger(Events.AuthenticationError);
             }
         };
 
         authRequest.ontimeout = (event) =>
         {
-            console.debug('auth request timeout');
             this.rodanChannel.trigger(Events.ServerWentAway);
         }
 
@@ -61,20 +57,17 @@ class AuthenticationController extends Marionette.Object
 
         if (this.serverController.authenticationType === 'token')
         {
-            console.debug('Setting auth token before checking status');
             var authToken = this.serverController.authenticationToken;
             authRequest.setRequestHeader('Authorization', 'Token ' + authToken);
         }
         else
         {
             // session auth
-            console.debug('Using session authentication');
             var sessionCookie = this.serverController.CSRFToken.value;
             authRequest.withCredentials = true;
             authRequest.setRequestHeader('X-CSRFToken', sessionCookie);
         }
 
-        console.log('sending');
         authRequest.send();
     }
 }

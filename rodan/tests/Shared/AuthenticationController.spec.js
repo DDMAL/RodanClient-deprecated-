@@ -34,7 +34,7 @@ describe('Authentication Controller', function()
         expect(spy.called).toBe(true);
     });
 
-    
+
 
     it('should trigger Events.UserMustAuthenticate if the user needs to authenticate', function()
     {
@@ -62,11 +62,24 @@ describe('Authentication Controller', function()
         expect(spy.called).toBe(true);
     });
 
-    it('should trigger Events.AuthenticationError if the server reports a client error', function()
+    it('should trigger Events.AuthenticationError if the server responds with a client error', function()
     {
         var spy = sinon.spy();
 
         this.server.respondWith("GET", "http://example.com/auth/status/", [400, {"Content-Type": "application/json"}, ""]);
+        this.authController = new AuthenticationController(this.serverController);
+        this.authController.checkAuthenticationStatus();
+        this.authController.rodanChannel.on(Events.AuthenticationError, spy);
+        this.server.respond();
+
+        expect(spy.called).toBe(true);
+    });
+
+    it('should trigger Events.AuthenticationError if the server responds with a server error', function()
+    {
+        var spy = sinon.spy();
+
+        this.server.respondWith("GET", "http://example.com/auth/status/", [500, {"Content-Type": "application/json"}, ""]);
         this.authController = new AuthenticationController(this.serverController);
         this.authController.checkAuthenticationStatus();
         this.authController.rodanChannel.on(Events.AuthenticationError, spy);
