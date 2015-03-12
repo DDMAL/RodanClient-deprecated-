@@ -3,7 +3,8 @@ import Radio from 'backbone.radio';
 
 import Cookie from "../Helpers/Cookie";
 import { mapFromJsonObject } from '../Helpers/Utilities';
-import { Events } from '../Configuration';
+import Events from '../Events';
+
 
 class ServerController extends Marionette.Object
 {
@@ -21,7 +22,7 @@ class ServerController extends Marionette.Object
 
         this.rodanChannel.on(Events.RoutesLoaded, () =>
         {
-            console.debug('Routes Loaded');
+            //console.debug('Routes Loaded');
         });
 
         this.CSRFToken = new Cookie('csrftoken');
@@ -41,9 +42,9 @@ class ServerController extends Marionette.Object
         // FYI: the use of the Fat arrow maps `this` to `ServerController`, not the request object.
         routeRequest.onload = (event) =>
         {
-            if (routeRequest.response && routeRequest.status === 200)
+            if (routeRequest.responseText && routeRequest.status === 200)
             {
-                var resp = JSON.parse(routeRequest.response);
+                var resp = JSON.parse(routeRequest.responseText);
 
                 this.routes = mapFromJsonObject(resp.routes);
                 this.serverConfiguration = mapFromJsonObject(resp.configuration);

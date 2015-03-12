@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 import Radio from 'backbone.radio';
 
-import { Events } from '../Configuration';
+import Events from '../Events';
 
 class User extends Backbone.Model
 {

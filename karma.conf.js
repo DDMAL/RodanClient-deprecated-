@@ -37,7 +37,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        'rodan/tests/**/*.spec.js': ['babel', 'coverage']
+        'rodan/app/**/*.js': ['babel'],
+        'rodan/tests/**/*.spec.js': ['babel']
     },
 
 

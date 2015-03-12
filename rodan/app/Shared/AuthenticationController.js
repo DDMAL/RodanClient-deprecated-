@@ -1,7 +1,7 @@
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
 
-import { Events } from '../Configuration';
+import Events from '../Events';
 import User from '../User/User';
 
 class AuthenticationController extends Marionette.Object
@@ -16,28 +16,24 @@ class AuthenticationController extends Marionette.Object
     checkAuthenticationStatus()
     {
         var authStatusRoute = this.serverController.statusRoute;
-
         var authRequest = new XMLHttpRequest();
+
         authRequest.onload = (event) =>
         {
             // stuff
-            console.debug('auth request route');
-            if (authRequest.response === null)
+            if (authRequest.responseText === null)
             {
-                console.error('Authentication lookup failed.');
                 this.rodanChannel.trigger(Events.AuthenticationError);
             }
 
-            console.log(authRequest.status);
             switch (authRequest.status)
             {
                 case 200:
                     console.debug('Authentication Success.');
-                    var parsed = JSON.parse(authRequest.response);
-                    console.debug(parsed);
+                    var parsed = JSON.parse(authRequest.responseText);
                     //this.serverController.activeUser = new User();
-                    var user = new User(parsed);
-                    console.log(user);
+                    this.activeUser = new User(parsed);
+                    //console.log(user);
                     this.rodanChannel.trigger(Events.AuthenticationSuccess);
                     break;
                 case 400:
@@ -60,14 +56,14 @@ class AuthenticationController extends Marionette.Object
             this.rodanChannel.trigger(Events.ServerWentAway);
         }
 
-        authRequest.open('GET', this.serverController.statusRoute, true);
+        authRequest.open('GET', authStatusRoute, true);
         authRequest.setRequestHeader('Accept', 'application/json');
 
         if (this.serverController.authenticationType === 'token')
         {
             console.debug('Setting auth token before checking status');
             var authToken = this.serverController.authenticationToken;
-            authRequest.setRequestHeader('Authorization', 'Token + authToken');
+            authRequest.setRequestHeader('Authorization', 'Token ' + authToken);
         }
         else
         {
@@ -78,6 +74,7 @@ class AuthenticationController extends Marionette.Object
             authRequest.setRequestHeader('X-CSRFToken', sessionCookie);
         }
 
+        console.log('sending');
         authRequest.send();
     }
 }

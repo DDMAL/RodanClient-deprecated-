@@ -4,7 +4,8 @@ import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
 
 import Router from './Router';
-import { Configuration, Events } from './Configuration';
+import Configuration from './Configuration';
+import Events from './Events';
 import ServerController from './Shared/ServerController';
 import AuthenticationController from './Shared/AuthenticationController';
 import UserCollection from './User/UserCollection';
