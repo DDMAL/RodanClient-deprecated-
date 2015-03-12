@@ -95,7 +95,7 @@ gulp.task('develop:test', function(callback)
     }, callback);
 });
 
-gulp.task('develop', ['develop:server'], function() {
+gulp.task('develop', ['develop:server', 'develop:test'], function() {
     gulp.start('develop:templates');
     gulp.start('develop:styles');
     $.livereload.listen();
