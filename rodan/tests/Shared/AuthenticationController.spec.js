@@ -17,11 +17,10 @@ describe('Authentication Controller', function()
         this.rootResponse = '{"routes":{"taskqueue-config":"http://example.com/taskqueue/config/","connections":"http://example.com/connections/","resultspackages":"http://example.com/resultspackages/","workflowjobs":"http://example.com/workflowjobs/","token-auth":"http://example.com/auth/token/","session-close":"http://example.com/auth/logout/","taskqueue-status":"http://example.com/taskqueue/status/","session-status":"http://example.com/auth/status/","workflowruns":"http://example.com/workflowruns/","resources":"http://example.com/resources/","inputs":"http://example.com/inputs/","jobs":"http://example.com/jobs/","users":"http://example.com/users/","runjobs":"http://example.com/runjobs/","outputs":"http://example.com/outputs/","inputporttypes":"http://example.com/inputporttypes/","session-auth":"http://example.com/auth/session/","inputports":"http://example.com/inputports/","workflows":"http://example.com/workflows/","taskqueue-scheduled":"http://example.com/taskqueue/scheduled/","taskqueue-active":"http://example.com/taskqueue/active/","projects":"http://example.com/projects/","outputporttypes":"http://example.com/outputporttypes/","outputports":"http://example.com/outputports/","resourcetypes":"http://example.com/resourcetypes/"},"configuration":{"page_length":20}}';
         this.server.respondWith("GET", "http://example.com/", [200, { "Content-Type": "application/json"}, this.rootResponse]);
         this.server.respond();
-
         this.authStatusResponse = '{"username":"admin","first_name":"","last_name":"","is_superuser":true,"url":"http://rodan-dev.simssa.ca/user/6/","is_active":true,"workflow_runs":[],"token":"","is_staff":true,"groups":[],"workflows":[],"email":"a@a.com","projects":[]}';
     });
 
-    it('should get the correct logged-in user status for session authentication', function()
+    it('should trigger Events.AuthenticationSuccess if authentication is successful', function()
     {
         var spy = sinon.spy();
         this.server.respondWith("GET", "http://example.com/auth/status/", [200, {"Content-Type": "application/json"}, this.authStatusResponse]);
@@ -33,8 +32,6 @@ describe('Authentication Controller', function()
         expect(this.authController.activeUser).not.toBeNull();
         expect(spy.called).toBe(true);
     });
-
-
 
     it('should trigger Events.UserMustAuthenticate if the user needs to authenticate', function()
     {
