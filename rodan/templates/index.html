@@ -20,11 +20,12 @@
     <script type="text/javascript" src="config.js"></script>
     <script>
         System.import('twbs/bootstrap');
-        System.import('app/Configuration').then(function(config)
+        System.import('app/Application').then(function(application)
         {{
-            window.Configuration = config;
+            var RodanClient = application.default;
+            var app = new RodanClient();
+            app.start();
         }});
-        System.import('app/Main');
     </script>
 </body>
 </html>
