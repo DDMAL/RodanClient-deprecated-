@@ -4,8 +4,8 @@ import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
 
 import Router from './Router';
-import Configuration from './Configuration';
 import Events from './Events';
+import Configuration from './Configuration';
 import ServerController from './Shared/ServerController';
 import AuthenticationController from './Shared/AuthenticationController';
 import UserCollection from './User/UserCollection';
@@ -16,6 +16,8 @@ class RodanClient extends Marionette.Application
 {
     initialize()
     {
+        this.appConfiguration = Configuration;
+
         $.ajaxPrefilter(function(options, originalOptions, jqXHR)
         {
             console.log('ajax prefilter');
@@ -25,27 +27,18 @@ class RodanClient extends Marionette.Application
         });
 
         this.rodanChannel = Radio.channel('rodan');
+        // when a request is made for the current application, respond with this instance.
+        this.rodanChannel.reply(Events.CurrentApplication, this);
 
         this.router = new Router();
-        this.appConfiguration = Configuration;
-
         this.serverController = new ServerController(this.appConfiguration);
         this.authenticationController = new AuthenticationController(this.serverController);
 
         this.rodanChannel.on(Events.RoutesLoaded, () =>
         {
             this.authenticationController.checkAuthenticationStatus();
-            var projects = new ProjectCollection();
-            projects.sync();
-            projects.on('request', (project) =>
-            {
-                console.log('added!');
-                console.log(project);
-            })
-
         });
 
-        this.rodanChannel.reply(Events.CurrentApplication, this);
         this.rodanChannel.on(Events.ServerWentAway, () =>
         {
             // do something great.
