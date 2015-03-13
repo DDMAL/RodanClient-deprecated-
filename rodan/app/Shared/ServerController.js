@@ -1,6 +1,5 @@
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-
 import Cookie from "../Helpers/Cookie";
 import { mapFromJsonObject } from '../Helpers/Utilities';
 import Events from '../Events';
@@ -12,7 +11,6 @@ class ServerController extends Marionette.Object
     {
         super();
         this.rodanChannel = Radio.channel('rodan');
-
         this.rodanServer = configuration.rodanServer;
         this.authenticationType = configuration.authenticationType;
         this.authenticationToken = configuration.authenticationToken;
@@ -48,7 +46,6 @@ class ServerController extends Marionette.Object
 
                 this.routes = mapFromJsonObject(resp.routes);
                 this.serverConfiguration = mapFromJsonObject(resp.configuration);
-
                 this.rodanChannel.trigger(Events.RoutesLoaded);
             }
             else
