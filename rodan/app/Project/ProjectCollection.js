@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 import Radio from 'backbone.radio';
 import Project from './Project';
-import { Events } from '../Configuration';
+import Events from '../Events';
 
 class ProjectCollection extends Backbone.Collection
 {
