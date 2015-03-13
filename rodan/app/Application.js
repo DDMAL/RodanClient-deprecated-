@@ -46,6 +46,10 @@ class RodanClient extends Marionette.Application
         });
 
         this.rodanChannel.reply(Events.CurrentApplication, this);
+        this.rodanChannel.on(Events.ServerWentAway, () =>
+        {
+            // do something great.
+        });
     }
 
     onStart()
