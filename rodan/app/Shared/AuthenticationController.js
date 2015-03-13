@@ -1,6 +1,5 @@
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-
 import Events from '../Events';
 import User from '../User/User';
 
@@ -44,6 +43,7 @@ class AuthenticationController extends Marionette.Object
                     break;
                 default:
                     this.rodanChannel.trigger(Events.AuthenticationError);
+                    break;
             }
         };
 
