@@ -30,7 +30,7 @@ class Cookie
 
     _readCookieValue()
     {
-        var name = this._cookieName + "=",
+        var name = this._cookieName + '=',
             ca = document.cookie.split(';');
 
         for (var i = 0, len = ca.length; i < len; i++)
@@ -46,7 +46,7 @@ class Cookie
                 return c.substring(name.length, c.length);
             }
         }
-        return "";
+        return '';
     }
 }
 

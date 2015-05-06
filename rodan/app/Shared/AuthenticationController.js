@@ -2,6 +2,7 @@ import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
 import Events from '../Events';
 import User from '../User/User';
+import Cookie from '../Helpers/Cookie';
 
 class AuthenticationController extends Marionette.Object
 {
@@ -50,7 +51,7 @@ class AuthenticationController extends Marionette.Object
         authRequest.ontimeout = (event) =>
         {
             this.rodanChannel.trigger(Events.ServerWentAway);
-        }
+        };
 
         authRequest.open('GET', authStatusRoute, true);
         authRequest.setRequestHeader('Accept', 'application/json');
@@ -60,15 +61,151 @@ class AuthenticationController extends Marionette.Object
             var authToken = this.serverController.authenticationToken;
             authRequest.setRequestHeader('Authorization', 'Token ' + authToken);
         }
-        else
+        else if (this.serverController.authenticationType === 'session')
         {
-            // session auth
-            var sessionCookie = this.serverController.CSRFToken.value;
+            console.log('Injecting the cookie for session authentication');
+            // if the server controller doesn't have the CSRF Token, set it now
+            if (!this.serverController.CSRFToken.value)
+            {
+                this.serverController.CSRFToken = new Cookie('csrftoken');//reads cookie from browser
+            }
+
             authRequest.withCredentials = true;
-            authRequest.setRequestHeader('X-CSRFToken', sessionCookie);
+            authRequest.setRequestHeader('X-CSRFToken', this.serverController.CSRFToken.value);
         }
 
         authRequest.send();
+    }
+
+    login(username, password)
+    {
+        // request from the server and set the authentication tokens
+        var authRoute = this.serverController.authenticationRoute;
+        var authType = this.serverController.authenticationType;
+        var loginRequest = new XMLHttpRequest();
+        var requestBody;
+
+        loginRequest.onload = (event) =>
+        {
+            if (loginRequest.statusText === null)
+            {
+                console.log('null resp');
+            }
+
+            switch (loginRequest.status)
+            {
+                case 200:
+                    var parsed = JSON.parse(loginRequest.responseText);
+                    this.activeUser = new User(parsed);
+                    console.log('Success', this.activeUser);
+
+                    if (authType === 'token')
+                    {
+                        this.serverController.authenticationToken = this.activeUser.attributes.token;
+                    }
+                    //else
+                    //{
+                    //    this.serverController.CSRFToken = new Cookie('csrftoken');
+                    //}
+
+                    this.rodanChannel.trigger(Events.AuthenticationSuccess);
+                    break;
+                case 400:
+                    console.log('Bad request');
+                    this.rodanChannel.trigger(Events.AuthenticationError);
+                    break;
+                case 401:
+                    console.log('Authentication failed');
+                    this.rodanChannel.trigger(Events.AuthenticationError); //@TODO AuthenticationFailed?
+                    //this.rodanChannel.trigger(Events.UserMustAuthenticate); @TODO re-enable, this is a loop right now
+                    break;
+                case 403:
+                    console.log('Forbidden');
+                    this.rodanChannel.trigger(Events.UserCannotAuthenticate);
+                    break;
+                default:
+                    console.log('Error: ', loginRequest.status);
+                    break;
+            }
+        };
+
+        loginRequest.open('POST', authRoute, true);
+
+        if (authType === 'session')
+        {
+            //if (!this.serverController.CSRFToken)
+            //    this.serverController.CSRFToken = new Cookie('csrftoken');//@TODO does this do what we want it to?
+
+            loginRequest.withCredentials = true;
+            loginRequest.setRequestHeader('X-CSRFToken', this.serverController.CSRFToken.value);
+        }
+
+        loginRequest.setRequestHeader('Accept', 'application/json');
+        loginRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        requestBody = 'username=' + username + '&password=' + password;
+
+        loginRequest.send(requestBody);
+    }
+
+    logout()
+    {
+        // request from the server and set the authentication tokens
+        var logoutRoute = this.serverController.logoutRoute;
+        var authType = this.serverController.authenticationType;
+        var logoutRequest = new XMLHttpRequest();
+
+        logoutRequest.onload = (event) => {
+            if (logoutRequest.statusText === null) {
+                console.log('null resp');
+            }
+
+            switch (logoutRequest.status) {
+                case 200:
+                    var parsed = JSON.parse(logoutRequest.responseText);
+                    console.log('Logout success');
+                    //remove cookies here
+
+                    this.rodanChannel.trigger(Events.DeauthenticationSuccess);
+                    //this.rodanChannel.trigger(Events.UserMustAuthenticate); @TODO trigger this to show login again
+                    break;
+                case 400:
+                    console.log('Bad request');
+                    this.rodanChannel.trigger(Events.AuthenticationError);
+                    break;
+                case 401:
+                    console.log('Deauthentication failed');
+                    this.rodanChannel.trigger(Events.AuthenticationError);
+                    //this.rodanChannel.trigger(Events.UserMustAuthenticate); @TODO trigger this to show login again
+                    break;
+                case 403:
+                    console.log('Forbidden');
+                    this.rodanChannel.trigger(Events.UserCannotAuthenticate);
+                    break;
+                default:
+                    console.log('Error: ', logoutRequest.status);
+                    break;
+            }
+        }
+
+        logoutRequest.open('POST', logoutRoute, true);
+        logoutRequest.setRequestHeader('Accept', 'application/json');
+
+        if (authType === 'session')
+        {
+            //if (!this.serverController.CSRFToken) @TODO necessary?
+            //    this.serverController.CSRFToken = new Cookie();
+
+            logoutRequest.withCredentials = true;
+            logoutRequest.setRequestHeader('X-CSRFToken', this.serverController.CSRFToken.value);
+        }
+        else
+        {
+            var authToken = this.serverController.authenticationToken;
+            logoutRequest.setRequestHeader('Authorization', 'Token ' + authToken);
+        }
+
+        logoutRequest.send();
     }
 }
 

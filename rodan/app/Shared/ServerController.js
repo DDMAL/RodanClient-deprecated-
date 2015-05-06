@@ -1,6 +1,6 @@
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-import Cookie from "../Helpers/Cookie";
+import Cookie from '../Helpers/Cookie';
 import { mapFromJsonObject } from '../Helpers/Utilities';
 import Events from '../Events';
 

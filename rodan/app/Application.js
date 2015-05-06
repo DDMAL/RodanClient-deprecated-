@@ -39,6 +39,18 @@ class RodanClient extends Marionette.Application
             this.authenticationController.checkAuthenticationStatus();
         });
 
+        this.rodanChannel.on(Events.UserMustAuthenticate, () =>
+        {
+            this.authenticationController.login('emagoni','fghj()*#');
+        });
+
+        //@TODO test, remove
+        this.rodanChannel.on(Events.AuthenticationSuccess, () =>
+        {
+            //this.authenticationController.logout();
+        });
+
+
         this.rodanChannel.on(Events.ServerWentAway, () =>
         {
             // do something great.
