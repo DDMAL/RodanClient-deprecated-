@@ -11,6 +11,7 @@ import AuthenticationController from './Shared/AuthenticationController';
 import UserCollection from './User/UserCollection';
 import ProjectCollection from './Project/ProjectCollection';
 
+import LoginView from './User/LoginView'
 
 class RodanClient extends Marionette.Application
 {
@@ -41,7 +42,8 @@ class RodanClient extends Marionette.Application
 
         this.rodanChannel.on(Events.UserMustAuthenticate, () =>
         {
-            this.authenticationController.login('emagoni','fghj()*#');
+             this.loginView = new LoginView();
+             this.loginView.render();
         });
 
         //@TODO test, remove
