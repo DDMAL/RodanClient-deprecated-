@@ -3,27 +3,36 @@ import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 import _ from 'underscore'
 
-class LoginView extends Backbone.View {
+import Events from '../Events';
+import Radio from 'backbone.radio';
+
+//class LoginView extends Backbone.View {
+class LoginView extends Backbone.Marionette.ItemView {
     constructor(options) {
         super(options);
 
-        this.setElement(document.getElementById('app'));
-        this.template = _.template(document.getElementById('login-form').innerHTML);
-        this.events = {
-            'click #submit': 'loginAttempt'
+        //this.setElement(document.getElementById('app'));
+        //this.template = _.template(document.getElementById('login-form').innerHTML);
+        this.template = '#login-form';
+        this.rodanChannel = Radio.channel('rodan');
+    }
+
+    events() {
+        return {
+            'click #login-btn': 'loginAttempt'
         };
     }
 
-    render() {
-        this.$el.html(this.template());
-        return this;
+    onShow() {
+        console.log('Loginview shown!');
     }
 
     loginAttempt() {
         //@TODO form validation!
-        var username = this.$('input[name="username"').value;
-        var password = this.$('input[name="password"').value;
-        this.authenticationController.login(username, password);
+        var username = this.$('input[name="username"]').val();
+        var password = this.$('input[name="password"]').val();
+        this.rodanChannel.trigger(Events.AuthenticationAttempt, {'user': username, 'pass': password});
+        //appInstance.AuthenticationController.login(username, password);
     }
 
 }

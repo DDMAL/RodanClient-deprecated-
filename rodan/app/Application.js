@@ -12,6 +12,7 @@ import UserCollection from './User/UserCollection';
 import ProjectCollection from './Project/ProjectCollection';
 
 import LoginView from './User/LoginView'
+import AppLayoutView from './Shared/AppLayoutView'
 
 class RodanClient extends Marionette.Application
 {
@@ -34,6 +35,16 @@ class RodanClient extends Marionette.Application
         this.router = new Router();
         this.serverController = new ServerController(this.appConfiguration);
         this.authenticationController = new AuthenticationController(this.serverController);
+
+        this.appLayoutView = new AppLayoutView();
+        this.appLayoutView.render();
+
+        //this.appLayoutView.content.show(new LoginView());
+        this.appLayoutView.addRegions({
+            menu: '#menu',
+            content: '#content'
+        });
+        this.appLayoutView.getRegion('content').show(new LoginView());
 
         this.rodanChannel.on(Events.RoutesLoaded, () =>
         {
