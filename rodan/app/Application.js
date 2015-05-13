@@ -39,12 +39,6 @@ class RodanClient extends Marionette.Application
         this.appLayoutView = new AppLayoutView();
         this.appLayoutView.render();
 
-        //this.appLayoutView.content.show(new LoginView());
-        this.appLayoutView.addRegions({
-            menu: '#menu',
-            content: '#content'
-        });
-        this.appLayoutView.getRegion('content').show(new LoginView());
         this.appLayoutView.content.show(new LoginView());
 
         this.rodanChannel.on(Events.RoutesLoaded, () =>
