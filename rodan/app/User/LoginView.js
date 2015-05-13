@@ -6,13 +6,10 @@ import _ from 'underscore'
 import Events from '../Events';
 import Radio from 'backbone.radio';
 
-//class LoginView extends Backbone.View {
 class LoginView extends Backbone.Marionette.ItemView {
     constructor(options) {
         super(options);
 
-        //this.setElement(document.getElementById('app'));
-        //this.template = _.template(document.getElementById('login-form').innerHTML);
         this.template = '#login-form';
         this.rodanChannel = Radio.channel('rodan');
     }
@@ -21,10 +18,6 @@ class LoginView extends Backbone.Marionette.ItemView {
         return {
             'click #login-btn': 'loginAttempt'
         };
-    }
-
-    onShow() {
-        console.log('Loginview shown!');
     }
 
     loginAttempt() {

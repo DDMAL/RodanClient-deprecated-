@@ -12,21 +12,20 @@ class AppLayoutView extends Backbone.Marionette.LayoutView {
     //    //the following goes in initialize instead of constructor?
     }
 
-    initialize() {
-        this.template = '#app-layout-view';
-        this.el = 'body';
-        //this.regions = {
-        //    menu: '#menu',
-        //    content: '#content'
-        //};
+    get el() {
+        return '#app';
     }
 
-    //regions(options) {
-    //    return {
-    //        menu: '#menu',
-    //        content: '#content'
-    //    };
-    //}
+    get template() {
+        return '#app-layout-view';
+    }
+
+    regions() {
+        return {
+            menu: '#menu',
+            content: '#content'
+        };
+    }
 }
 
 export default AppLayoutView;
