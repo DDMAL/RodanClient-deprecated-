@@ -9,7 +9,6 @@ import Radio from 'backbone.radio';
 class AppLayoutView extends Backbone.Marionette.LayoutView {
     constructor(options){
         super(options);
-    //    //the following goes in initialize instead of constructor?
     }
 
     get el() {
@@ -22,8 +21,9 @@ class AppLayoutView extends Backbone.Marionette.LayoutView {
 
     regions() {
         return {
-            menu: '#menu',
-            content: '#content'
+            menu: '#region-menu',
+            content: '#region-content',
+            status: '#region-status'
         };
     }
 }
