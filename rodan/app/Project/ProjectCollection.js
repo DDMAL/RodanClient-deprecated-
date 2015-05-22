@@ -17,8 +17,7 @@ class ProjectCollection extends Backbone.Collection
 
     parse(resp, options)
     {
-        console.log('parse called');
-        return resp;
+        return resp.results;
     }
 }
 

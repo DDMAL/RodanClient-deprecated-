@@ -1,18 +1,20 @@
 import Backbone from 'backbone';
+import Radio from 'backbone.radio';
+import Events from '../Events';
 
 class Project extends Backbone.Model
 {
-    constructor(data)
+    constructor(options)
     {
-        this.idAttribute = 'url';
-        super(data);
+        this.defaults = {
+            idAttribute: 'uuid'
+        };
+        super(options);
     }
 
     initialize(data)
     {
-        debugger;
     }
-
 }
 
 export default Project;

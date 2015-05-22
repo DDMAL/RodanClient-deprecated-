@@ -13,6 +13,8 @@ import ProjectCollection from './Project/ProjectCollection';
 
 import LoginView from './User/LoginView'
 import AppLayoutView from './Shared/AppLayoutView'
+import NavigationView from './Shared/NavigationView'
+import ProjectCollectionView from './Project/ProjectCollectionView'
 
 class RodanClient extends Marionette.Application
 {
@@ -39,8 +41,6 @@ class RodanClient extends Marionette.Application
         this.appLayoutView = new AppLayoutView();
         this.appLayoutView.render();
 
-        this.appLayoutView.content.show(new LoginView());
-
         this.rodanChannel.on(Events.RoutesLoaded, () =>
         {
             this.authenticationController.checkAuthenticationStatus();
@@ -48,16 +48,25 @@ class RodanClient extends Marionette.Application
 
         this.rodanChannel.on(Events.UserMustAuthenticate, () =>
         {
-             this.loginView = new LoginView();
-             this.loginView.render();
+            this.appLayoutView.content.show(new LoginView());
         });
 
-        //@TODO test, remove
+        this.rodanChannel.on(Events.AuthenticationAttempt, (args) =>
+        {
+            this.authenticationController.login(args.user, args.pass);
+        });
+
         this.rodanChannel.on(Events.AuthenticationSuccess, () =>
         {
-            //this.authenticationController.logout();
-        });
+            this.appLayoutView.menu.show(new NavigationView());
 
+            // create new collection
+            var projectCollection = new ProjectCollection();
+            projectCollection.fetch();
+
+            // show collection
+            this.appLayoutView.content.show(new ProjectCollectionView({collection: projectCollection}));
+        });
 
         this.rodanChannel.on(Events.ServerWentAway, () =>
         {
