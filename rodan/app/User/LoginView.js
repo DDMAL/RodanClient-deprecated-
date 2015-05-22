@@ -13,7 +13,12 @@ class LoginView extends Backbone.Marionette.ItemView
         super(options);
 
         this.template = '#login-form';
+
         this.rodanChannel = Radio.channel('rodan');
+        this.rodanChannel.on(Events.AuthenticationError, () =>
+        {
+            this.showErrorMessage();
+        });
     }
 
     events()
@@ -30,7 +35,6 @@ class LoginView extends Backbone.Marionette.ItemView
         var username = this.$('input[name="username"]').val();
         var password = this.$('input[name="password"]').val();
         this.rodanChannel.trigger(Events.AuthenticationAttempt, {'user': username, 'pass': password});
-        //appInstance.AuthenticationController.login(username, password);
     }
 
     onKeyUp(ev)
@@ -44,6 +48,11 @@ class LoginView extends Backbone.Marionette.ItemView
         }
     }
 
+    showErrorMessage()
+    {
+        if (!$('#login-error').length)
+            $('#login-form').prepend('<div id="login-error" class="alert alert-danger" role="alert">Authentication error.</div>')
+    }
 }
 
 export default LoginView;
