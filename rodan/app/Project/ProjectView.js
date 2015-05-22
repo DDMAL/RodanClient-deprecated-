@@ -7,7 +7,8 @@ import Events from '../Events';
 import Radio from 'backbone.radio';
 
 var ProjectView = Marionette.ItemView.extend({
-    template: '#project-view'
+    template: '#project-view',
+    tagName: 'tr'
 });
 
 export default ProjectView;

@@ -8,8 +8,10 @@ import Radio from 'backbone.radio';
 
 import ProjectView from './ProjectView'
 
-var ProjectCollectionView = Marionette.CollectionView.extend({
-    childView: ProjectView
+var ProjectCollectionView = Marionette.CompositeView.extend({
+    childView: ProjectView,
+    template: '#project-table-view',
+    childViewContainer: 'tbody'
 });
 
 export default ProjectCollectionView;
