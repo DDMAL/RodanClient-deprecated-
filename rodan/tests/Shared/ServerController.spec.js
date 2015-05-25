@@ -59,10 +59,10 @@ describe('Server Controller', function()
         this.server.respondWith("GET", "http://example.com/", [200, { "Content-Type": "application/json"}, this.rootResponse]);
         this.server.respond();
         expect(this.serverController.routeForRouteName('projects')).toBe('http://example.com/projects/');
-    })
+    });
 
     afterEach(function()
     {
         this.server.restore();
     });
-})
+});
