@@ -10,10 +10,11 @@ import ServerController from './Shared/ServerController';
 import AuthenticationController from './Shared/AuthenticationController';
 import UserCollection from './User/UserCollection';
 import ProjectCollection from './Project/ProjectCollection';
+import NavigationCollection from './Shared/NavigationCollection';
 
 import LoginView from './User/LoginView'
 import AppLayoutView from './Shared/AppLayoutView'
-import NavigationView from './Shared/NavigationView'
+import NavigationCollectionView from './Shared/NavigationCollectionView'
 import ProjectCollectionView from './Project/ProjectCollectionView'
 
 class RodanClient extends Marionette.Application
@@ -58,7 +59,9 @@ class RodanClient extends Marionette.Application
 
         this.rodanChannel.on(Events.AuthenticationSuccess, () =>
         {
-            this.appLayoutView.menu.show(new NavigationView());
+            var navigationCollection = new NavigationCollection();
+            navigationCollection.add({name: 'Projects', url: '#'});
+            this.appLayoutView.menu.show(new NavigationCollectionView({collection: navigationCollection}));
 
             // create new collection
             var projectCollection = new ProjectCollection();
