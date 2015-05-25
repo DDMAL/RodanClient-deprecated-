@@ -1,5 +1,6 @@
 var Events = {
     RoutesLoaded: 'routesloaded',
+    AuthenticationAttempt: 'authenticationattempt',
     AuthenticationError: 'authenticationerror',
     AuthenticationSuccess: 'authenticationsuccess',
     UserMustAuthenticate: 'usermustauthenticate',
