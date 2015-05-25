@@ -1,3 +1,67 @@
-#sidebar {
-  background: #000;
+body {
+  padding-top: 0;
 }
+
+.sidebar {
+  top: 0;
+}
+
+#login-form-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #eee;
+  z-index: 1000;
+}
+
+#login-form {
+  -webkit-font-smoothing: antialiased;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 40px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  border: 1px solid #d7d7d7;
+}
+
+#login-form img {
+  width: 450px;
+  margin-bottom: 30px;
+  display: block;
+}
+
+#login-form .form-control {
+  display: inline;
+  max-width: 22.12em;
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+#login-form .form-control:focus {
+  z-index: 1001;
+}
+
+#login-form label {
+  font-size: 16px;
+  font-weight: normal;
+  color: #888;
+  width: 6em;
+}
+
+#login-form input[type=button] {
+  padding: 10px;
+  font-size: 16px;
+}
+

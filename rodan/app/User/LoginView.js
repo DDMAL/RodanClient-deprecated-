@@ -29,6 +29,11 @@ class LoginView extends Backbone.Marionette.ItemView
         };
     }
 
+    id()
+    {
+        return 'login-form-overlay';
+    }
+
     loginAttempt()
     {
         //@TODO form validation!
