@@ -5,6 +5,7 @@ var Events = {
     AuthenticationSuccess: 'authenticationsuccess',
     UserMustAuthenticate: 'usermustauthenticate',
     UserCannotAuthenticate: 'usercannotauthenticate',
+    UserDidNavigate: 'userdidnavigate',
     ServerWentAway: 'serverwentaway',
     DeauthenticationSuccess: 'deauthenticationsuccess',
 
