@@ -54,7 +54,7 @@ class LoginView extends Backbone.Marionette.ItemView
     showErrorMessage()
     {
         if (!$('#login-error').length)
-            $('#login-form').prepend('<div id="login-error" class="alert alert-danger" role="alert">Authentication error.</div>')
+            $('#login-form').prepend('<div id="login-error" class="alert alert-danger" role="alert">Authentication error.</div>');
     }
 }
 
