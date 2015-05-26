@@ -40,12 +40,12 @@ class LoginView extends Backbone.Marionette.ItemView
         this.rodanChannel.trigger(Events.AuthenticationAttempt, {'user': username, 'pass': password});
     }
 
-    onKeyUp(ev)
+    onKeyUp(event)
     {
-        var key = ev.keyCode || ev.which;
+        var key = event.keyCode || event.which;
 
-        if (key == 13 && $('input[name="password"]').val()) {
-            ev.preventDefault();
+        if (key === 13 && $('input[name="password"]').val()) {
+            event.preventDefault();
             this.loginAttempt();
             return false;
         }
