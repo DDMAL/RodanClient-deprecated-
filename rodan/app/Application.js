@@ -59,8 +59,17 @@ class RodanClient extends Marionette.Application
 
         this.rodanChannel.on(Events.AuthenticationSuccess, () =>
         {
-            var navigationCollection = new NavigationCollection();
-            navigationCollection.add({name: 'Projects', url: '#'});
+            var navigationCollection = new NavigationCollection([
+                {
+                    name: 'Projects',
+                    route: 'projects'
+                },
+                {
+                    name: 'Log out',
+                    route: 'logout'
+                }
+            ]);
+
             this.appLayoutView.menu.show(new NavigationCollectionView({collection: navigationCollection}));
 
             // create new collection
