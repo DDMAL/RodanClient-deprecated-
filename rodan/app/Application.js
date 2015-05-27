@@ -88,10 +88,8 @@ class RodanClient extends Marionette.Application
 
     onStart()
     {
-        if (!Backbone.history)
-        {
+        if (!Backbone.history.started)
             Backbone.history.start({pushState: true});
-        }
     }
 }
 
