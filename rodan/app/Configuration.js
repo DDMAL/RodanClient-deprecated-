@@ -1,6 +1,6 @@
 var Configuration = {
     rodanServer: 'http://rodan-dev.simssa.ca',
-    authenticationType: 'session',               // 'session' or 'token'
+    authenticationType: 'token',               // 'session' or 'token'
     authenticationToken: null
 };
 
