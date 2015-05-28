@@ -1,38 +1,26 @@
-import Marionette from 'backbone.marionette';
+import Backbone from 'backbone';
 import Radio from 'backbone.radio';
 import Events from './Events';
 
 import AppController from './Shared/AppController'
 
-class Router extends Marionette.AppRouter
+class Router extends Backbone.Router
 {
     constructor()
     {
         this.rodanChannel = Radio.channel('rodan');
         this.appInstance = this.rodanChannel.request(Events.CurrentApplication);
-        this.rodanChannel.on(Events.UserDidNavigate, this.navigateToRoute);
 
         this.routes = {
-            '': 'root',
+            //'': 'root',
             'projects': 'showProjectsList',
             'logout': 'logOut'
         };
 
-    showProjectsList() {
-        console.log('showprojectslist');
-    }
-
-    logOut() {
-        console.log('logout');
-    }
+        // The Router handles routing triggered by direct navigation to the URL.
+        // It emits UserDidNavigate events (same as those emitted by NavigationCollectionView) in handlers.
 
         super();
-    }
-
-    navigateToRoute(route)
-    {
-        //@TODO can this be made more elegant? issue: 'this' is rodanChannel, not appInstance.router
-        this.request(Events.CurrentApplication).router.navigate(route, {trigger: true});
     }
 }
 

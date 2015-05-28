@@ -8,6 +8,8 @@ class AppLayoutView extends Marionette.LayoutView
     constructor(options)
     {
         super(options);
+        // AppLayoutView's methods for switching views will be called by AppController.
+        // They will invoke the router to change the URL but not trigger its route handlers.
     }
 
     get el()
