@@ -4,6 +4,8 @@ import Events from '../Events';
 import User from '../User/User';
 import Cookie from '../Helpers/Cookie';
 
+import $ from 'jquery';
+
 class AuthenticationController extends Marionette.Object
 {
     constructor(serverController)
@@ -11,6 +13,27 @@ class AuthenticationController extends Marionette.Object
         super();
         this.serverController = serverController;
         this.rodanChannel = Radio.channel('rodan');
+
+        var authController = this;
+
+        this.rodanChannel.on(Events.AuthenticationSuccess, () =>
+        {
+            $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+                options.xhrFields = {
+                    withCredentials: true
+                };
+
+                if (!options.beforeSend) {
+                    options.beforeSend = function (xhr)
+                    {
+                        if (authController.serverController.authenticationType === 'token')
+                        {
+                            xhr.setRequestHeader('Authorization', 'Token ' + authController.serverController.authenticationToken);
+                        }
+                    };
+                }
+            });
+        })
     }
 
     checkAuthenticationStatus()

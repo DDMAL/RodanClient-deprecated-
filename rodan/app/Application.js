@@ -23,14 +23,6 @@ class RodanClient extends Marionette.Application
     {
         this.appConfiguration = Configuration;
 
-        $.ajaxPrefilter(function(options, originalOptions, jqXHR)
-        {
-            console.log('ajax prefilter');
-            options.xhrFields = {
-                withCredentials: true
-            };
-        });
-
         this.rodanChannel = Radio.channel('rodan');
         // when a request is made for the current application, respond with this instance.
         this.rodanChannel.reply(Events.CurrentApplication, this);
