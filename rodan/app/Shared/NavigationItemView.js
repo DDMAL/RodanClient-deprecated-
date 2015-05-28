@@ -1,14 +1,16 @@
-import $ from 'jquery';
-import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 
-import Events from '../Events';
-import Radio from 'backbone.radio';
+class NavigationItemView extends Marionette.ItemView
+{
+    get template()
+    {
+        return '#navigation-item-view';
+    }
 
-var NavigationItemView = Backbone.Marionette.ItemView.extend
-({
-    template: '#navigation-item-view',
-    tagName: 'li'
-});
+    get tagName()
+    {
+        return 'li';
+    }
+}
 
 export default NavigationItemView;

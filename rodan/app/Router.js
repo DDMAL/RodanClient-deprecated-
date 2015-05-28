@@ -1,8 +1,11 @@
-import Backbone from 'backbone';
+import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
 import Events from './Events';
 
-class Router extends Backbone.Router {
+import AppController from './Shared/AppController'
+
+class Router extends Marionette.AppRouter
+{
     constructor()
     {
         this.rodanChannel = Radio.channel('rodan');
@@ -15,9 +18,6 @@ class Router extends Backbone.Router {
             'logout': 'logOut'
         };
 
-        super();
-    }
-
     showProjectsList() {
         console.log('showprojectslist');
     }
@@ -26,7 +26,11 @@ class Router extends Backbone.Router {
         console.log('logout');
     }
 
-    navigateToRoute(route) {
+        super();
+    }
+
+    navigateToRoute(route)
+    {
         //@TODO can this be made more elegant? issue: 'this' is rodanChannel, not appInstance.router
         this.request(Events.CurrentApplication).router.navigate(route, {trigger: true});
     }

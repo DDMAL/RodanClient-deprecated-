@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import Backbone from 'backbone';
+import Marionette from 'backbone.marionette';
 
 import Events from '../Events';
 import Radio from 'backbone.radio';
 
-class LoginView extends Backbone.Marionette.ItemView
+class LoginView extends Marionette.ItemView
 {
     constructor(options)
     {

@@ -1,17 +1,27 @@
-import $ from 'jquery';
-import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
-import _ from 'underscore'
+import ProjectView from './ProjectView';
 
-import Events from '../Events';
-import Radio from 'backbone.radio';
+class ProjectCollectionView extends Marionette.CompositeView
+{
+    constructor(options)
+    {
+        super(options);
+    }
 
-import ProjectView from './ProjectView'
+    get childView()
+    {
+        return ProjectView;
+    }
 
-var ProjectCollectionView = Marionette.CompositeView.extend({
-    childView: ProjectView,
-    template: '#project-table-view',
-    childViewContainer: 'tbody'
-});
+    get template()
+    {
+        return '#project-table-view';
+    }
+
+    get childViewContainer()
+    {
+        return 'tbody';
+    }
+}
 
 export default ProjectCollectionView;

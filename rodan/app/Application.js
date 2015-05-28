@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
@@ -8,14 +7,13 @@ import Events from './Events';
 import Configuration from './Configuration';
 import ServerController from './Shared/ServerController';
 import AuthenticationController from './Shared/AuthenticationController';
-import UserCollection from './User/UserCollection';
 import ProjectCollection from './Project/ProjectCollection';
 import NavigationCollection from './Shared/NavigationCollection';
 
-import LoginView from './User/LoginView'
-import AppLayoutView from './Shared/AppLayoutView'
-import NavigationCollectionView from './Shared/NavigationCollectionView'
-import ProjectCollectionView from './Project/ProjectCollectionView'
+import LoginView from './User/LoginView';
+import AppLayoutView from './Shared/AppLayoutView';
+import NavigationCollectionView from './Shared/NavigationCollectionView';
+import ProjectCollectionView from './Project/ProjectCollectionView';
 
 class RodanClient extends Marionette.Application
 {

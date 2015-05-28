@@ -1,12 +1,9 @@
-import $ from 'jquery';
-import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
-import _ from 'underscore'
 
 import Events from '../Events';
 import Radio from 'backbone.radio';
 
-class AppLayoutView extends Backbone.Marionette.LayoutView
+class AppLayoutView extends Marionette.LayoutView
 {
     constructor(options)
     {
