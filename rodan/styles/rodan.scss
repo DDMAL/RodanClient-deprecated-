@@ -1,3 +1,26 @@
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+@mixin prefix($name, $argument) {
+  -webkit-#{$name}: #{$argument};
+  -ms-#{$name}: #{$argument};
+  -moz-#{$name}: #{$argument};
+  -o-#{$name}: #{$argument};
+  #{$name}: #{$argument};
+}
+
 body {
   padding-top: 0;
 }
@@ -26,10 +49,14 @@ body {
   transform: translate(-50%, -50%);
   background: #fff;
   padding: 40px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
+  @include prefix(border-radius, 10px);
   border: 1px solid #d7d7d7;
+  @include prefix(animation, fadein 1s);
+}
+
+@include keyframes(fadein) {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 #login-form img {
@@ -43,9 +70,7 @@ body {
   max-width: 22.12em;
   position: relative;
   height: auto;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  @include prefix(box-sizing, border-box);
   padding: 10px;
   font-size: 16px;
   margin-bottom: 10px;
