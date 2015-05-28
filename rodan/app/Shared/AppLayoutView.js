@@ -6,20 +6,25 @@ import _ from 'underscore'
 import Events from '../Events';
 import Radio from 'backbone.radio';
 
-class AppLayoutView extends Backbone.Marionette.LayoutView {
-    constructor(options){
+class AppLayoutView extends Backbone.Marionette.LayoutView
+{
+    constructor(options)
+    {
         super(options);
     }
 
-    get el() {
+    get el()
+    {
         return '#app';
     }
 
-    get template() {
+    get template()
+    {
         return '#app-layout-view';
     }
 
-    regions() {
+    regions()
+    {
         return {
             menu: '#region-menu',
             content: '#region-content',

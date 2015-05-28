@@ -8,8 +8,10 @@ import Radio from 'backbone.radio';
 
 import NavigationItemView from './NavigationItemView';
 
-var NavigationCollectionView = Backbone.Marionette.CompositeView.extend({
-    initialize() {
+var NavigationCollectionView = Backbone.Marionette.CompositeView.extend
+({
+    initialize()
+    {
         this.rodanChannel = Radio.channel('rodan');
     },
 
@@ -20,7 +22,8 @@ var NavigationCollectionView = Backbone.Marionette.CompositeView.extend({
         'click a': 'navigate'
     },
 
-    navigate(event) {
+    navigate(event)
+    {
         event.preventDefault();
         //store the clicked element's href
         var targetRoute = event.target.attributes[0].value;
