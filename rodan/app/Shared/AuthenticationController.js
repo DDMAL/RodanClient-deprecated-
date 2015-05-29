@@ -213,7 +213,7 @@ class AuthenticationController extends Marionette.Object
                     console.log('Error: ', logoutRequest.status);
                     break;
             }
-        }
+        };
 
         logoutRequest.open('POST', logoutRoute, true);
         logoutRequest.setRequestHeader('Accept', 'application/json');
