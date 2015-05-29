@@ -14,26 +14,26 @@ class AuthenticationController extends Marionette.Object
         this.serverController = serverController;
         this.rodanChannel = Radio.channel('rodan');
 
-        var authController = this;
+        this.rodanChannel.on(Events.AuthenticationSuccess, () => this.defineAJAXFilter);
+    }
 
-        this.rodanChannel.on(Events.AuthenticationSuccess, () =>
-        {
-            $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-                options.xhrFields = {
-                    withCredentials: true
-                };
+    defineAJAXFilter()
+    {
+        $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+            options.xhrFields = {
+                withCredentials: true
+            };
 
-                if (!options.beforeSend) {
-                    options.beforeSend = function (xhr)
+            if (!options.beforeSend) {
+                options.beforeSend = function (xhr)
+                {
+                    if (this.serverController.authenticationType === 'token')
                     {
-                        if (authController.serverController.authenticationType === 'token')
-                        {
-                            xhr.setRequestHeader('Authorization', 'Token ' + authController.serverController.authenticationToken);
-                        }
-                    };
-                }
-            });
-        })
+                        xhr.setRequestHeader('Authorization', 'Token ' + this.serverController.authenticationToken);
+                    }
+                };
+            }
+        });
     }
 
     checkAuthenticationStatus()
