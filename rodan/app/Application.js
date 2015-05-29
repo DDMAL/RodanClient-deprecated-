@@ -30,22 +30,12 @@ class RodanClient extends Marionette.Application
         this.authenticationController = new AuthenticationController(this.serverController);
 
         this.appLayoutView = new AppLayoutView();
+        this.navigationCollection = new NavigationCollection();
         this.appLayoutView.render();
 
         this.rodanChannel.on(Events.AuthenticationSuccess, () =>
         {
-            var navigationCollection = new NavigationCollection([
-                {
-                    name: 'Projects',
-                    route: 'projects'
-                },
-                {
-                    name: 'Log out',
-                    route: 'logout'
-                }
-            ]);
-
-            this.appLayoutView.menu.show(new NavigationCollectionView({collection: navigationCollection}));
+            this.initializeNavigation();
 
             // create new collection
             var projectCollection = new ProjectCollection();
@@ -59,6 +49,20 @@ class RodanClient extends Marionette.Application
         {
             // do something great.
         });
+    }
+
+    initializeNavigation()
+    {
+        this.navigationCollection.reset([
+            {
+                name: 'Projects',
+                route: 'projects'
+            },
+            {
+                name: 'Log out',
+                route: 'logout'
+            }
+        ]);
     }
 
     onStart()

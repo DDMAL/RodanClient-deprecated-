@@ -3,8 +3,10 @@ import Marionette from 'backbone.marionette';
 import Events from '../Events';
 import Radio from 'backbone.radio';
 
+import NavigationCollectionView from './NavigationCollectionView';
 import ProjectCollectionView from '../Project/ProjectCollectionView';
 import LoginView from '../User/LoginView';
+
 
 class AppLayoutView extends Marionette.LayoutView
 {
@@ -39,6 +41,13 @@ class AppLayoutView extends Marionette.LayoutView
             content: '#region-content',
             status: '#region-status'
         };
+    }
+
+    onRender()
+    {
+        // Show the models in appInstance.navigationCollection
+        // (Regions automatically update when the collection is changed).
+        this.getRegion('menu').show(new NavigationCollectionView({collection: this.appInstance.navigationCollection}));
     }
 }
 
