@@ -37,11 +37,11 @@ class NavigationCollectionView extends Marionette.CompositeView
 
     navigate(event)
     {
+        // Send the clicked element's href along with the event
         event.preventDefault();
-        //store the clicked element's href
-        var targetRoute = event.target.attributes[0].value;
-            this.rodanChannel.trigger(Events.UserDidNavigate, targetRoute);
-            return false;
+        var location = event.target.attributes[0].value;
+        this.rodanChannel.trigger(Events.UserDidNavigate, location);
+        return false;
     }
 }
 
