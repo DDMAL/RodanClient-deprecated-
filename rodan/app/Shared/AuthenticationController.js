@@ -14,11 +14,15 @@ class AuthenticationController extends Marionette.Object
         this.serverController = serverController;
         this.rodanChannel = Radio.channel('rodan');
 
-        this.rodanChannel.on(Events.AuthenticationSuccess, () => this.defineAJAXFilter);
+        this.rodanChannel.on(Events.AuthenticationSuccess, () => this.defineAJAXFilter());
+        this.rodanChannel.on(Events.RoutesLoaded, () => this.checkAuthenticationStatus());
+        this.rodanChannel.on(Events.AuthenticationAttempt, (args) => this.login(args.user, args.pass));
     }
 
     defineAJAXFilter()
     {
+        var instance = this;
+
         $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
             options.xhrFields = {
                 withCredentials: true
@@ -27,9 +31,9 @@ class AuthenticationController extends Marionette.Object
             if (!options.beforeSend) {
                 options.beforeSend = function (xhr)
                 {
-                    if (this.serverController.authenticationType === 'token')
+                    if (instance.serverController.authenticationType === 'token')
                     {
-                        xhr.setRequestHeader('Authorization', 'Token ' + this.serverController.authenticationToken);
+                        xhr.setRequestHeader('Authorization', 'Token ' + instance.serverController.authenticationToken);
                     }
                 };
             }

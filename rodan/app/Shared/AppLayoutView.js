@@ -3,13 +3,23 @@ import Marionette from 'backbone.marionette';
 import Events from '../Events';
 import Radio from 'backbone.radio';
 
+import ProjectCollectionView from '../Project/ProjectCollectionView';
+import LoginView from '../User/LoginView';
+
 class AppLayoutView extends Marionette.LayoutView
 {
     constructor(options)
     {
         super(options);
-        // AppLayoutView's methods for switching views will be called by AppController.
-        // They will invoke the router to change the URL but not trigger its route handlers.
+        this.rodanChannel = Radio.channel('rodan');
+        this.appInstance = this.rodanChannel.request(Events.CurrentApplication);
+        // AppLayoutView listens to UserDidNavigate events
+        // Where necessary, views invoke the router to change the URL (but not trigger its route handlers).
+
+        var instance = this;
+
+        this.rodanChannel.on(Events.UserDidNavigate, (arg) => this.changeView(arg));
+        this.rodanChannel.on(Events.UserMustAuthenticate, () => this.content.show(new LoginView()));
     }
 
     get el()

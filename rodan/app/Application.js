@@ -32,21 +32,6 @@ class RodanClient extends Marionette.Application
         this.appLayoutView = new AppLayoutView();
         this.appLayoutView.render();
 
-        this.rodanChannel.on(Events.RoutesLoaded, () =>
-        {
-            this.authenticationController.checkAuthenticationStatus();
-        });
-
-        this.rodanChannel.on(Events.UserMustAuthenticate, () =>
-        {
-            this.appLayoutView.content.show(new LoginView());
-        });
-
-        this.rodanChannel.on(Events.AuthenticationAttempt, (args) =>
-        {
-            this.authenticationController.login(args.user, args.pass);
-        });
-
         this.rodanChannel.on(Events.AuthenticationSuccess, () =>
         {
             var navigationCollection = new NavigationCollection([
