@@ -194,7 +194,7 @@ class AuthenticationController extends Marionette.Object
                     //remove cookies here
 
                     this.rodanChannel.trigger(Events.DeauthenticationSuccess);
-                    //this.rodanChannel.trigger(Events.UserMustAuthenticate); @TODO trigger this to show login again
+                    this.rodanChannel.trigger(Events.UserMustAuthenticate);
                     break;
                 case 400:
                     console.log('Bad request');
