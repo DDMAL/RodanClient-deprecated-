@@ -19,6 +19,7 @@ class Router extends Backbone.Router
 
         // The Router handles routing triggered by direct navigation to the URL.
         // It emits UserDidNavigate events (same as those emitted by NavigationCollectionView) in handlers.
+        // Views respond appropriately.
 
         super();
     }
