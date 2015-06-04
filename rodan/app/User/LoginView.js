@@ -47,7 +47,6 @@ class LoginView extends Marionette.ItemView
         if (key === 13 && $('input[name="password"]').val()) {
             event.preventDefault();
             this.loginAttempt();
-            return false;
         }
     }
 
