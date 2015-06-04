@@ -2,8 +2,6 @@ import Backbone from 'backbone';
 import Radio from 'backbone.radio';
 import Events from './Events';
 
-import AppController from './Shared/AppController'
-
 class Router extends Backbone.Router
 {
     constructor()
