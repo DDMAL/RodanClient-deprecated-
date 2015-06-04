@@ -6,7 +6,9 @@ import Radio from 'backbone.radio';
 import NavigationCollectionView from './NavigationCollectionView';
 import ProjectCollectionView from '../Project/ProjectCollectionView';
 import LoginView from '../User/LoginView';
+import ProjectView from '../Project/ProjectView';
 
+import Project from '../Project/Project';
 
 class AppLayoutView extends Marionette.LayoutView
 {
@@ -19,7 +21,7 @@ class AppLayoutView extends Marionette.LayoutView
         // Where necessary, views invoke the router to change the URL (but not trigger its route handlers).
 
         this.rodanChannel.on(Events.UserMustAuthenticate, () => this.content.show(new LoginView()));
-        this.rodanChannel.on(Events.UserDidNavigate, (arg) => this.changeView(arg));
+        this.rodanChannel.on(Events.UserDidNavigate, (location, data) => this.changeView(location, data));
     }
 
     get el()
@@ -48,13 +50,25 @@ class AppLayoutView extends Marionette.LayoutView
         this.getRegion('menu').show(new NavigationCollectionView({collection: this.appInstance.navigationCollection}));
     }
 
-    changeView(targetView)
+    changeView(targetView, data)
     {
         switch (targetView)
         {
             case 'projects':
                 console.log('appLayoutView switched to projects');
                 this.getRegion('content').show(new ProjectCollectionView({collection: this.appInstance.projectCollection}));
+                break;
+
+            case 'projectDetail':
+                var projectID = data;
+                console.log('appLayoutView switched to projectdetail for pid', data.projectID);
+                this.appInstance.currentProject = new Project({
+                    id: data.projectID
+                });
+                this.appInstance.currentProject.fetch({
+                    url: data.projectURL
+                });
+                this.getRegion('content').show(new ProjectView({model: this.appInstance.currentProject}));
                 break;
 
             case 'logout':

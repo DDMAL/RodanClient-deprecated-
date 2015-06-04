@@ -6,10 +6,16 @@ class Project extends Backbone.Model
 {
     constructor(options)
     {
-        this.defaults = {
-            idAttribute: 'uuid'
-        };
         super(options);
+        this.rodanChannel = Radio.channel('rodan');
+        this.appInstance = this.rodanChannel.request(Events.CurrentApplication);
+    }
+
+    defaults()
+    {
+        return {
+            name: 'Loading Project...'
+        };
     }
 
     initialize(data)

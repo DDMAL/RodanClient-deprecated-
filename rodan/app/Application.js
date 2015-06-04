@@ -9,6 +9,7 @@ import ServerController from './Shared/ServerController';
 import AuthenticationController from './Shared/AuthenticationController';
 import ProjectCollection from './Project/ProjectCollection';
 import NavigationCollection from './Shared/NavigationCollection';
+import Project from './Project/Project';
 
 import LoginView from './User/LoginView';
 import AppLayoutView from './Shared/AppLayoutView';
@@ -36,6 +37,7 @@ class RodanClient extends Marionette.Application
         this.rodanChannel.on(Events.AuthenticationSuccess, () =>
         {
             this.initializeNavigation();
+            this.currentProject = new Project();
 
             this.projectCollection = new ProjectCollection();
             this.appLayoutView.getRegion('content').show(new ProjectCollectionView({collection: this.projectCollection}));
