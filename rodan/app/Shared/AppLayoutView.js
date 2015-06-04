@@ -54,7 +54,7 @@ class AppLayoutView extends Marionette.LayoutView
         {
             case 'projects':
                 console.log('appLayoutView switched to projects');
-                this.content.show(new ProjectCollectionView(this.appInstance.projectCollection));
+                this.getRegion('content').show(new ProjectCollectionView({collection: this.appInstance.projectCollection}));
                 break;
 
             case 'logout':
