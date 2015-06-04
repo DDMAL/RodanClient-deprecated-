@@ -29,6 +29,8 @@ body {
   top: 0;
 }
 
+/* Login form */
+
 #login-form-overlay {
   position: fixed;
   top: 0;
@@ -92,3 +94,7 @@ body {
   font-size: 16px;
 }
 
+/* Projects list */
+table.projects td {
+  cursor: pointer;
+}
