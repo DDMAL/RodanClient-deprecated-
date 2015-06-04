@@ -1,5 +1,5 @@
 import Marionette from 'backbone.marionette';
-import ProjectView from './ProjectView';
+import ProjectListItemView from './ProjectListItemView';
 
 class ProjectCollectionView extends Marionette.CompositeView
 {
@@ -10,7 +10,7 @@ class ProjectCollectionView extends Marionette.CompositeView
 
     get childView()
     {
-        return ProjectView;
+        return ProjectListItemView;
     }
 
     get template()

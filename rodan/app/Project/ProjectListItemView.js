@@ -1,6 +1,6 @@
 import Marionette from 'backbone.marionette';
 
-class ProjectView extends Marionette.ItemView
+class ProjectListItemView extends Marionette.ItemView
 {
     get template()
     {
@@ -12,4 +12,4 @@ class ProjectView extends Marionette.ItemView
     }
 }
 
-export default ProjectView;
+export default ProjectListItemView;
