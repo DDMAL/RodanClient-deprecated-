@@ -18,10 +18,8 @@ class AppLayoutView extends Marionette.LayoutView
         // AppLayoutView listens to UserDidNavigate events
         // Where necessary, views invoke the router to change the URL (but not trigger its route handlers).
 
-        var instance = this;
-
-        this.rodanChannel.on(Events.UserDidNavigate, (arg) => this.changeView(arg));
         this.rodanChannel.on(Events.UserMustAuthenticate, () => this.content.show(new LoginView()));
+        this.rodanChannel.on(Events.UserDidNavigate, (arg) => this.changeView(arg));
     }
 
     get el()
@@ -49,6 +47,25 @@ class AppLayoutView extends Marionette.LayoutView
         // (Regions automatically update when the collection is changed).
         this.getRegion('menu').show(new NavigationCollectionView({collection: this.appInstance.navigationCollection}));
     }
+
+    changeView(targetView)
+    {
+        switch (targetView)
+        {
+            case 'projects':
+                console.log('appLayoutView switched to projects');
+                this.content.show(new ProjectCollectionView(this.appInstance.projectCollection));
+                break;
+
+            case 'logout':
+                console.log('appLayoutView switched to logout');
+                break;
+
+            default:
+                console.log('Error: appLayoutView cannot find destination view.');
+        }
+    }
+
 }
 
 export default AppLayoutView;

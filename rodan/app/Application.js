@@ -37,12 +37,9 @@ class RodanClient extends Marionette.Application
         {
             this.initializeNavigation();
 
-            // create new collection
-            var projectCollection = new ProjectCollection();
-            projectCollection.fetch();
-
-            // show collection
-            this.appLayoutView.content.show(new ProjectCollectionView({collection: projectCollection}));
+            this.projectCollection = new ProjectCollection();
+            this.appLayoutView.getRegion('content').show(new ProjectCollectionView({collection: this.projectCollection}));
+            this.projectCollection.fetch();
         });
 
         this.rodanChannel.on(Events.ServerWentAway, () =>
