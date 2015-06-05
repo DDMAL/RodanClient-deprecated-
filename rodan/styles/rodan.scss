@@ -94,7 +94,12 @@ body {
   font-size: 16px;
 }
 
-/* Projects list */
-table.projects td {
+table.table-hover td {
   cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
