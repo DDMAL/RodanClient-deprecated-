@@ -8,6 +8,7 @@ var Events = {
     UserDidNavigate: 'userdidnavigate',
     ServerWentAway: 'serverwentaway',
     DeauthenticationSuccess: 'deauthenticationsuccess',
+    ProjectDidLoad: 'projectdidload',
 
     CurrentApplication: 'currentapplication'
 };
