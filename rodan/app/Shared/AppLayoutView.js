@@ -1,12 +1,11 @@
 import Marionette from 'backbone.marionette';
-
 import Events from '../Events';
 import Radio from 'backbone.radio';
 
 import NavigationCollectionView from './NavigationCollectionView';
 import ProjectCollectionView from '../Project/ProjectCollectionView';
 import LoginView from '../User/LoginView';
-import ProjectView from '../Project/ProjectView';
+import ProjectLayoutView from '../Project/ProjectLayoutView';
 
 import Project from '../Project/Project';
 
@@ -52,23 +51,25 @@ class AppLayoutView extends Marionette.LayoutView
 
     changeView(targetView, data)
     {
-        switch (targetView)
-        {
+        //@TODO fire router
+        switch (targetView) {
             case 'projects':
                 console.log('appLayoutView switched to projects');
                 this.getRegion('content').show(new ProjectCollectionView({collection: this.appInstance.projectCollection}));
                 break;
 
             case 'projectDetail':
-                var projectID = data;
-                console.log('appLayoutView switched to projectdetail for pid', data.projectID);
-                this.appInstance.currentProject = new Project({
-                    id: data.projectID
-                });
-                this.appInstance.currentProject.fetch({
-                    url: data.projectURL
-                });
-                this.getRegion('content').show(new ProjectView({model: this.appInstance.currentProject}));
+                this.showProjectDetail(data.projectID, data.projectURL);
+                break;
+
+            case 'resourceDetail':
+                var resourceURL = data;
+                console.log('appLayoutView switched to resourceDetail for rURL:', resourceURL);
+                break;
+
+            case 'workflowDetail':
+                var workflowURL = data;
+                console.log('appLayoutView switched to workflowDetail for wURL:', workflowURL);
                 break;
 
             case 'logout':
@@ -76,8 +77,32 @@ class AppLayoutView extends Marionette.LayoutView
                 break;
 
             default:
-                console.log('Error: appLayoutView cannot find destination view.');
+                console.log('Error: appLayoutView cannot find destination view', targetView);
         }
+    }
+
+    showProjectDetail(projectID, projectURL)
+    {
+        console.log('appLayoutView switched to projectdetail for pid', projectID);
+
+        if (this.appInstance.currentProject.id !== projectID)
+        {
+            console.log('currentProject changed: old, new:', this.appInstance.currentProject.id, projectID);
+            //@TODO unsubscribe old handlers on ProjectLayoutView.onBeforeDestroy (or ProjectDidChange event?)
+            this.appInstance.currentProject = new Project({
+                id: projectID
+            });
+            var appLayoutView = this;
+            this.appInstance.currentProject.fetch({
+                url: projectURL,
+                success()
+                {
+                    appLayoutView.rodanChannel.trigger(Events.ProjectDidLoad);
+                }
+            });
+        }
+
+        this.getRegion('content').show(new ProjectLayoutView());
     }
 
 }
