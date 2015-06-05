@@ -1,13 +1,13 @@
 import Marionette from 'backbone.marionette';
 
-class ProjectView extends Marionette.ItemView
+class ProjectHeaderView extends Marionette.ItemView
 {
     get template()
     {
-        return '#project-view';
+        return '#project-view-header';
     }
 
-    get modelEvents()
+    modelEvents()
     {
         return {
             'change': 'render'
@@ -15,4 +15,4 @@ class ProjectView extends Marionette.ItemView
     }
 }
 
-export default ProjectView;
+export default ProjectHeaderView;
