@@ -17,9 +17,13 @@ class Project extends Backbone.Model
     defaults()
     {
         return {
-            name: 'Loading Project...',
-            idAttribute: 'uuid'
+            name: 'Loading Project...'
         };
+    }
+
+    get idAttribute()
+    {
+        return 'uuid';
     }
 
     // url should be set from getting the collection
