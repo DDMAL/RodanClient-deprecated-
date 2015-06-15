@@ -17,10 +17,12 @@ class Project extends Backbone.Model
     defaults()
     {
         return {
-            name: 'Loading Project...'
+            name: 'Loading Project...',
+            idAttribute: 'uuid'
         };
     }
 
+    // url should be set from getting the collection
     url()
     {
         //@TODO this can't be hardcoded
@@ -29,11 +31,11 @@ class Project extends Backbone.Model
 
     parse(response)
     {
+        // this method is only called for Project.fetch, not ProjectCollection.fetch
         response.workflows = new WorkflowCollection(response.workflows);
         response.resources = new ResourceCollection(response.resources);
         return response;
     }
-
 }
 
 export default Project;
