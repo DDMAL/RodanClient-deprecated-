@@ -89,15 +89,17 @@ class AppLayoutView extends Marionette.LayoutView
         {
             console.log('currentProject changed: old, new:', this.appInstance.currentProject.id, projectID);
             //@TODO unsubscribe old handlers on ProjectLayoutView.onBeforeDestroy (or ProjectDidChange event?)
-            this.appInstance.currentProject = new Project({
-                id: projectID
-            });
+            // store the project with specified ID in a container
+            this.appInstance.currentProject = this.appInstance.projectCollection.get(projectID);
             var appLayoutView = this;
+            // fetch and merge attributes (should add project.workflows and project.resources to project)
             this.appInstance.currentProject.fetch({
                 url: projectURL,
                 success()
                 {
                     appLayoutView.rodanChannel.trigger(Events.ProjectDidLoad);
+                    // merge the project with resources and workflows back into the collection
+                    appLayoutView.appInstance.projectCollection.add(appLayoutView.appInstance.currentProject, {merge: true});
                 }
             });
         }
