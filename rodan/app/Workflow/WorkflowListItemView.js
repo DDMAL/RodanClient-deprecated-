@@ -28,7 +28,8 @@ class WorkflowListItemView extends Marionette.ItemView
     showWorkflow(event)
     {
         var url = this.model.get('url');
-        this.trigger('WorkflowSelected', url);
+        var id = this.model.id; //TODO uuid?
+        this.trigger('WorkflowSelected', {workflowURL: url, workflowID: id});
     }
 }
 

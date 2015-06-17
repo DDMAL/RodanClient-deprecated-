@@ -42,9 +42,9 @@ class WorkflowCollectionView extends Marionette.CompositeView
         };
     }
 
-    goToWorkflow(itemView, workflowURL)
+    goToWorkflow(itemView, data)
     {
-        this.rodanChannel.trigger(Events.UserDidNavigate, 'workflowDetail', workflowURL);
+        this.rodanChannel.trigger(Events.UserDidNavigate, 'workflowDetail', data);
     }
 }
 
