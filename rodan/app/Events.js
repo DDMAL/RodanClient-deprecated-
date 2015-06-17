@@ -6,6 +6,7 @@ var Events = {
     UserMustAuthenticate: 'usermustauthenticate',
     UserCannotAuthenticate: 'usercannotauthenticate',
     UserDidNavigate: 'userdidnavigate',
+    UserDidSwitchModes: 'userdidswitchmodes',
     ServerWentAway: 'serverwentaway',
     DeauthenticationSuccess: 'deauthenticationsuccess',
     ProjectDidLoad: 'projectdidload',
