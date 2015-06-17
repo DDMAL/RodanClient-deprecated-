@@ -1,11 +1,11 @@
 import Backbone from 'backbone';
-import ResourceListItem from './ResourceListItem';
+import Resource from './Resource';
 
 class ResourceCollection extends Backbone.Collection
 {
     constructor(options)
     {
-        this.model = ResourceListItem;
+        this.model = Resource;
 
         super(options);
     }

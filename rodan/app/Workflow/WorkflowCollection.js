@@ -1,11 +1,11 @@
 import Backbone from 'backbone';
-import WorkflowListItem from './WorkflowListItem';
+import Workflow from './Workflow';
 
 class WorkflowCollection extends Backbone.Collection
 {
     constructor(options)
     {
-        this.model = WorkflowListItem;
+        this.model = Workflow;
 
         super(options);
     }
